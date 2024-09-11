@@ -16,8 +16,12 @@ let askQuestion = (query) => {
 }
 
 let Add = (firstName, lastName) => {
-    let myArray = [firstName, lastName]
-    const data = JSON.stringify(myArray);
+    let myObject = {
+        first_name: firstName,
+        last_name: lastName,
+    };
+
+    const data = JSON.stringify(myObject);
 
     fs.writeFile('prototype.json', data, (err) => {
         if (err) {
@@ -32,7 +36,7 @@ let Add = (firstName, lastName) => {
             console.error(err);
         } else {
             const myTable = JSON.parse(data);
-            console.log(myTable);
+            console.log(`User was saved with the name ${myTable.first_name} and last name ${myTable.last_name}`);
         }
     });
 };
