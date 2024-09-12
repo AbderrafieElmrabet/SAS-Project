@@ -12,7 +12,7 @@ let askQuestion = (query) => {
 }
 
 let Add = (fullName, descreption, debutDate, endDate) => {
-    fs.readFile("prototype.json", "utf8", (err, data) => {
+    fs.readFile("project.json", "utf8", (err, data) => {
         if (err) {
             console.log(err);
         } else {
@@ -27,7 +27,7 @@ let Add = (fullName, descreption, debutDate, endDate) => {
             myTable.push(myObject);
             let myData = JSON.stringify(myTable);
 
-            fs.writeFile("prototype.json", myData, (err) => {
+            fs.writeFile("project.json", myData, (err) => {
                 if (err) {
                     console.log(err);
                 } else {
@@ -39,7 +39,7 @@ let Add = (fullName, descreption, debutDate, endDate) => {
 }
 
 let show = () => {
-    fs.readFile("prototype.json", "utf8", (err, data) => {
+    fs.readFile("project.json", "utf8", (err, data) => {
         if (err) {
             console.log(err)
         } else {
@@ -58,7 +58,7 @@ let show = () => {
 }
 
 let Delete = (id) => {
-    fs.readFile("prototype.json", "utf8", (err, data) => {
+    fs.readFile("project.json", "utf8", (err, data) => {
         if (err) {
             console.log(err)
         } {
@@ -70,7 +70,7 @@ let Delete = (id) => {
             } else {
                 let myData = JSON.stringify(filteredTable);
 
-                fs.writeFile("prototype.json", myData, (err) => {
+                fs.writeFile("project.json", myData, (err) => {
                     if (err) {
                         console.log(err)
                     } else {
