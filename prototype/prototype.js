@@ -1,10 +1,5 @@
-const { access } = require("fs");
 let readline = require("readline");
-const { createInflate } = require("zlib");
-const fs = require('fs');
-
-
-//Functions
+let fs = require('fs');
 
 let interface = readline.createInterface({
     input: process.stdin,
@@ -16,49 +11,48 @@ let askQuestion = (query) => {
 }
 
 let Add = (firstName, lastName) => {
-    let myObject = {
-        first_name: firstName,
-        last_name: lastName,
-    };
-
-    const data = JSON.stringify(myObject);
-
-    fs.writeFile('prototype.json', data, (err) => {
-        if (err) {
-            console.error(err);
-        } else {
-            console.log('table was saved successfully');
-        }
-    });
-
     fs.readFile('prototype.json', 'utf8', (err, data) => {
         if (err) {
             console.error(err);
         } else {
-            const myTable = JSON.parse(data);
-            console.log(`User was saved with the name ${myTable.first_name} and last name ${myTable.last_name}`);
+            let myTable = JSON.parse(data);
+
+            let myObject = {
+                id: myTable.length + 1,
+                first_name: firstName,
+                last_name: lastName
+            };
+
+            myTable.push(myObject);
+
+            let myData = JSON.stringify(myTable);
+
+            fs.writeFile('prototype.json', myData, (err) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    console.log('table was saved successfully!')
+                }
+            })
         }
-    });
-};
+    })
+}
 
 let Delete = (id) => {
-    console.log(`delete ${id}`);
+    console.log(`delete ${id}`)
 };
 
-
-//Main Function
-
-const initiateApp = async () => {
+let initiateApp = async () => {
     let first_name;
     let last_name;
     let id = 0;
 
-    if (await askQuestion("Enter the letter (a, d): ") == "a") {
-        first_name = await askQuestion("Enter the first_name: ");
-        last_name = await askQuestion("Enter the last_name: ");
+    if (await askQuestion("Enter the letter 'a' or 'd' to either add or delete") == "a") {
+        first_name = await askQuestion("Enter first name: ");
+        last_name = await askQuestion("Enter last name: ");
         Add(first_name, last_name);
-    } else if (await askQuestion("Enter the letter (a, d): ") == "d") {
-        id = await askQuestion("Enter the id: ");
+    } else if (await askQuestion("Enter the letter 'a' or 'd' to either add or delete") == "d") {
+        id = await askQuestion("Enter id: ");
         Delete(id);
     }
     interface.close();
